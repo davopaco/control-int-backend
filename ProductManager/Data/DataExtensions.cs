@@ -25,5 +25,6 @@ public static class DataExtensions
     public static void AddScopedInstances(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<ProductsService>();
+        builder.Services.AddScoped<EstadosService>();
     }
 }

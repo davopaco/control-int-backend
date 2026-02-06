@@ -7,11 +7,11 @@ namespace ProductManager.Services;
 public class ProductsService(ProductManagerContext context)
 {
     //Obtener todos los productos
-    public async Task<List<ProductoDto>> GetAllProductos()
+    public async Task<List<ProductoDetailedDto>> GetAllProductos()
     {
         try
         {
-            return await context.Productos.Select(producto => ProductoDto.ProductosToDto(producto)).AsNoTracking().ToListAsync();
+            return await context.Productos.Include(prod => prod.Estado).Select(producto => ProductoDetailedDto.ProductosToDto(producto)).AsNoTracking().ToListAsync();
         }
         catch (Exception e)
         {
