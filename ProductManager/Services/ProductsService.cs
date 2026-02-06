@@ -35,18 +35,18 @@ public class ProductsService(ProductManagerContext context)
     }
 
     //Obtener el producto por ID
-    public async Task<Information<ProductoDto>> GetProductoById(int id)
+    public async Task<Information<ProductoDetailedDto>> GetProductoById(int id)
     {
         try
         {
-            var producto = await context.Productos.FindAsync(id);
+            var producto = await context.Productos.Where(prod => prod.Id == id).Include(prod => prod.Estado).Select(producto => ProductoDetailedDto.ProductosToDto(producto)).AsNoTracking().ToListAsync();
 
-            if (producto is null)
+            if (producto is null || producto.Count == 0)
             {
-                return new Information<ProductoDto>(true, null);
+                return new Information<ProductoDetailedDto>(true, null);
             }
 
-            return new Information<ProductoDto>(false, ProductoDto.ProductosToDto(producto));
+            return new Information<ProductoDetailedDto>(false, producto[0]);
         }
         catch (Exception e)
         {
