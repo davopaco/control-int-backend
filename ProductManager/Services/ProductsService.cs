@@ -20,6 +20,20 @@ public class ProductsService(ProductManagerContext context)
         }
     }
 
+    //Obtener todos los productos ordenados por precio
+    public async Task<List<ProductoDetailedDto>> GetAllProductosSorted()
+    {
+        try
+        {
+            return await context.Productos.OrderByDescending(prod => prod.Precio).Include(prod => prod.Estado).Select(producto => ProductoDetailedDto.ProductosToDto(producto)).AsNoTracking().ToListAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An issue occurred while obtaining products");
+        }
+    }
+
     //Obtener el producto por ID
     public async Task<Information<ProductoDto>> GetProductoById(int id)
     {

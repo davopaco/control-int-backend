@@ -8,6 +8,20 @@ namespace ProductManager.Controllers;
 [Route("api/products")]
 public class ProductsController(ProductsService productsService) : ControllerBase
 {
+    [HttpGet("sorted")]
+    public async Task<IActionResult> GetAllProductsSorted()
+    {
+        try
+        {
+            var productos = await productsService.GetAllProductosSorted();
+            return Ok(productos);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500);
+        }
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAllProductos()
     {
