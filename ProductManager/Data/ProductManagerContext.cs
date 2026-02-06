@@ -5,4 +5,6 @@ public class ProductManagerContext(DbContextOptions<ProductManagerContext> optio
 {
     public DbSet<Producto> Productos => Set<Producto>();
     public DbSet<Estado> Estado => Set<Estado>();
+    public DbSet<Imagen> Imagenes => Set<Imagen>();
+    public DbSet<ImagenProductos> ImagenesProductos => Set<ImagenProductos>();
 }

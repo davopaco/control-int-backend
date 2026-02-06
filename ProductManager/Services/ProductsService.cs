@@ -56,16 +56,16 @@ public class ProductsService(ProductManagerContext context)
     }
 
     //Agregar un nuevo producto
-    public async Task<ProductoDto> CreateProducto(InsertUpdateProductoDto insertEventDto)
+    public async Task<ProductoDto> CreateProducto(InsertUpdateProductoDto insertProductDto)
     {
         try
         {
             Producto producto = new()
             {
-                Nombre = insertEventDto.Nombre,
-                Descripcion = insertEventDto.Descripcion,
-                Precio = insertEventDto.Precio,
-                EstadoId = insertEventDto.EstadoId,
+                Nombre = insertProductDto.Nombre,
+                Descripcion = insertProductDto.Descripcion,
+                Precio = insertProductDto.Precio,
+                EstadoId = insertProductDto.EstadoId,
                 FechaCreacion = DateTime.Now
             };
 

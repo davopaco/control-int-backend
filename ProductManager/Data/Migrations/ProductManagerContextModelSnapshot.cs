@@ -33,6 +33,42 @@ namespace ProductManager.Data.Migrations
                     b.ToTable("Estado");
                 });
 
+            modelBuilder.Entity("ProductManager.Models.Imagen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Imagenes");
+                });
+
+            modelBuilder.Entity("ProductManager.Models.ImagenProductos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ImagenId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImagenId");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("ImagenesProductos");
+                });
+
             modelBuilder.Entity("ProductManager.Models.Producto", b =>
                 {
                     b.Property<int>("Id")
@@ -61,6 +97,25 @@ namespace ProductManager.Data.Migrations
                     b.HasIndex("EstadoId");
 
                     b.ToTable("Productos");
+                });
+
+            modelBuilder.Entity("ProductManager.Models.ImagenProductos", b =>
+                {
+                    b.HasOne("ProductManager.Models.Imagen", "Imagen")
+                        .WithMany()
+                        .HasForeignKey("ImagenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProductManager.Models.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Imagen");
+
+                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("ProductManager.Models.Producto", b =>
